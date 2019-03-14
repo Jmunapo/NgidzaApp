@@ -1,15 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-/*
-  Generated class for the RemoteProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class RemoteProvider {
-  url: string = 'https://example.com/api/v1/'
+
+  TOKEN = `efbbefnefHBNSND265ev565r5vrv`;
+  url: string = 'http://localhost/api/v1/';
   constructor(public http: HttpClient) {
     console.log('Hello RemoteProvider Provider');
   }
@@ -22,8 +18,22 @@ export class RemoteProvider {
     return this.http.post(`${this.url}${endpoint}`, cred);
   }
 
-  getData(type: string, userId) {
-    return this.http.get(`${this.url}${type}`, userId);
+  getData(endpoint: string, params?: any, reqOpts?: any) {
+    if (!reqOpts) {
+      reqOpts = {
+        params: new HttpParams()
+      };
+    }
+
+    reqOpts.headers = 'Authorization', 'Bearer ' + this.TOKEN;
+    console.log(reqOpts);
+    if (params) {
+      reqOpts.params = new HttpParams();
+      for (let k in params) {
+        reqOpts.params = reqOpts.params.set(k, params[k]);
+      }
+    }
+    return this.http.get(this.url + endpoint, reqOpts);
   }
 
 }

@@ -21,8 +21,8 @@ export class WeightPage {
 
   }
 
-  ionViewWillLoad() {
-    this.remote.getData('weight', 155).subscribe((resp: any) => {
+  ionViewDidLoad() {
+    this.remote.getData('weight', { id: 155 }).subscribe((resp: any) => {
       console.log(resp);
       if (resp) {
         this.userInfo = resp;
@@ -31,10 +31,6 @@ export class WeightPage {
       console.log(error);
     })
     console.log('Joe');
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad WeightPage');
   }
 
 }
